@@ -1,7 +1,7 @@
 package com.example.findpublicwifiservice.model;
 
 
-import com.example.findpublicwifiservice.dto.WiFiDTO;
+import com.example.findpublicwifiservice.dto.WiFiDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,8 +49,8 @@ public class WiFiModel {
         this.workDatetime = workDatetime;
     }
 
-    public WiFiDTO toDTO() {
-        return WiFiDTO.builder()
+    public WiFiDto toDTO() {
+        return WiFiDto.builder()
             .mgrNo(mgrNo)
             .district(district)
             .wifiName(wifiName)

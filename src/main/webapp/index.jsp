@@ -7,14 +7,15 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-6">
-            <form action="wifi-load" method="GET">
+            <form action="wifi" method="GET">
+                <input type="hidden" name="action" value="getWiFiList">
                 <label for="lat">LAT:</label>
                 <input type="text" id="lat" name="lat" required>
 
                 <label for="lnt">LNT</label>
                 <input type="text" id="lnt" name="lnt" required>
 
-                <button class="btn btn-primary btn-sm"  >내 위치 가져오기</button>
+                <button class="btn btn-primary btn-sm" type="button" onclick="getLocation();" >내 위치 가져오기</button>
                 <button class="btn btn-primary btn-sm" type="submit">근처 WIPI 정보 보기</button>
             </form>
 
@@ -45,13 +46,13 @@
         </thead>
         <tbody>
         <c:choose>
-            <c:when test="${not empty wifiList}">
-                <c:forEach var="wifi" items="${wifiList}" varStatus="status">
+            <c:when test="${not empty sessionScope.wifiList}">
+                <c:forEach var="wifi" items="${sessionScope.wifiList}" varStatus="status">
                     <tr>
                         <td>${wifi.distance}</td>
                         <td>${wifi.mgrNo}</td>
                         <td>${wifi.district}</td>
-                        <td><a href="/wifi"/>{wifi.wifiName}</td>
+                        <td><a href="${pageContext.request.contextPath}/wifi?action=getWiFiDetail&mgrNo=${wifi.mgrNo}"/>${wifi.wifiName}</td>
                         <td>${wifi.address1}</td>
                         <td>${wifi.address2}</td>
                         <td>${wifi.installFloor}</td>
@@ -77,5 +78,40 @@
         </tbody>
     </table>
 </div>
+<script>
+    function getLocation() {
+        // Geolocation API가 지원되는지 확인
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                // 위도와 경도를 폼에 채워넣기
+                var latitude = position.coords.latitude;  // 위도
+                var longitude = position.coords.longitude;  // 경도
 
+                // X, Y 좌표 입력 필드에 위도와 경도 값 설정
+                document.getElementById('lat').value = latitude;
+                document.getElementById('lnt').value = longitude;
+                // 세션 스토리지에 저장
+                sessionStorage.setItem('lat', latitude);
+                sessionStorage.setItem('lnt', longitude);
+            }, function(error) {
+                // 위치를 가져오는 데 실패한 경우
+                alert("위치 정보를 가져올 수 없습니다: " + error.message);
+            });
+        } else {
+            alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+        }
+    }
+
+    window.onload = function() {
+        // 페이지 로드 시 세션 스토리지에 저장된 값이 있는지 확인
+        var savedLat = sessionStorage.getItem('lat');
+        var savedLnt = sessionStorage.getItem('lnt');
+
+        // 만약 저장된 값이 있으면, lat, lnt 입력 필드에 그 값을 채워넣기
+        if (savedLat && savedLnt) {
+            document.getElementById('lat').value = savedLat;
+            document.getElementById('lnt').value = savedLnt;
+        }
+    };
+</script>
 <%@ include file ="layout/footer.jsp" %>

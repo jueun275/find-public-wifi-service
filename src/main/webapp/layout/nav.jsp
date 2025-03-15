@@ -6,7 +6,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="#">홈</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/index.jsp">홈</a>
                 <a class="nav-link" href="#">위치 히스토리 목록</a>
                 <a class="nav-link" href="${pageContext.request.contextPath}/load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
             </div>

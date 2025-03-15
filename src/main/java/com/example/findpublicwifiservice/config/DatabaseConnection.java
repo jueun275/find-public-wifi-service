@@ -5,7 +5,7 @@ import java.sql.*;
 // spring 에서는 DB 커넥션풀로 관리하는데 서블릿에서 서정방방법을 몰라서  싱글톤으로 관리합니다.
 public class DatabaseConnection {
 
-    private static final String DB_URL = "jdbc:sqlite:db/wifi_db.sqlite";
+    private static final String DB_URL = "jdbc:sqlite:D:\\_A_JUEUN\\zerobase\\find-public-wifi-service\\db\\wifi_db.sqlite";
     private Connection connection;
 
     // 싱글톤 인스턴스
