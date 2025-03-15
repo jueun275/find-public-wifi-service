@@ -21,7 +21,7 @@ public class OpenApiServiceTest {
         Mockito.when(mockServletContext.getInitParameter("openapi.accessKey")).thenReturn("테스트용notRealAccessKey");
         openApiService = new OpenApiService(mockServletContext);
     }
-    
+
     @Test
     public void testAccessKeyInitialization() {
         // accessKey가 제대로 초기화 되었는지 테스트

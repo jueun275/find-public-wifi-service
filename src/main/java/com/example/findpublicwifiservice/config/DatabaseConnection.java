@@ -14,7 +14,6 @@ public class DatabaseConnection {
     // 생성자를 private으로 설정하여 외부에서 인스턴스 생성을 방지
     private DatabaseConnection() {}
 
-    // 싱글톤 인스턴스를 반환하는 메서드
     public static DatabaseConnection getInstance() {
         if (instance == null) {
             instance = new DatabaseConnection();
@@ -22,21 +21,26 @@ public class DatabaseConnection {
         return instance;
     }
 
-    // 데이터베이스 연결을 시작하는 메서드
-    public void connect() throws SQLException, ClassNotFoundException {
-        if (!isConnected()) {
-            Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection(DB_URL);
-            System.out.println("Connected to database.");
+    public Connection getConnection() throws SQLException {
+        if (this.connection == null || this.connection.isClosed()) {
+            try {
+                // SQLite JDBC 드라이버 로드
+                Class.forName("org.sqlite.JDBC");
+                // 연결 설정
+                this.connection = DriverManager.getConnection(DB_URL);
+                System.out.println("DB에 연결되었습니다");
+            } catch (ClassNotFoundException | SQLException e) {
+                System.err.println("DB연결에 문제가 생겼습니다. " + e.getMessage());
+                throw new SQLException("Error connecting to database", e);
+            }
         }
+        return this.connection;
     }
 
-    // 데이터베이스 연결을 종료하는 메서드
     public void disconnect() {
-        close(connection);
+        close(this.connection);
     }
 
-    // JDBC 자원을 안전하게 종료하는 메서드
     private void close(AutoCloseable resource) {
         if (resource != null) {
             try {
@@ -47,12 +51,8 @@ public class DatabaseConnection {
         }
     }
 
-    // Connection 반환 메서드
-    public Connection getConnection() {
-        return this.connection;
-    }
 
-    // 연결 상태 확인 메서드
+    // 연결 상태 확인 메서드 (선택적으로 사용)
     public boolean isConnected() {
         try {
             return this.connection != null && !this.connection.isClosed();
@@ -60,14 +60,5 @@ public class DatabaseConnection {
             System.err.println("Error checking connection status: " + e.getMessage());
             return false;
         }
-    }
-
-    // PreparedStatement와 ResultSet을 안전하게 닫는 메서드
-    public void closeStatement(PreparedStatement ps) {
-        close(ps);
-    }
-
-    public void closeResultSet(ResultSet rs) {
-        close(rs);
     }
 }
