@@ -24,19 +24,20 @@ tasks.withType(JavaCompile) {
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.36'
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
-    compileOnly('javax.servlet:javax.servlet-api:4.0.1')
 
-    implementation 'org.xerial:sqlite-jdbc:3.49.0.0'
-    // Gson
-    implementation 'com.google.code.gson:gson:2.12.1'
-    //okhttp3
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation 'org.xerial:sqlite-jdbc:3.49.0.0'  // SQLite JDBC
+    implementation 'com.google.code.gson:gson:2.12.1'  // Gson
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'  // OkHttp
+    implementation 'javax.servlet:jstl:1.2'  // JSTL
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
     testCompileOnly 'org.projectlombok:lombok:1.18.36'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
-
+    testImplementation 'javax.servlet:javax.servlet-api:4.0.1' // 테스트 환경
+    testImplementation 'org.mockito:mockito-core:3.11.2'
 }
 
 test {
