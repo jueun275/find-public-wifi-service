@@ -9,7 +9,7 @@
                 <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/index.jsp">홈</a>
                 <a class="nav-link" href="${pageContext.request.contextPath}/history">위치 히스토리 목록</a>
                 <a class="nav-link" href="${pageContext.request.contextPath}/load-wifi">Open API 와이파이 정보 가져오기</a>
-                <a class="nav-link" href="${pageContext.request.contextPath}/bookmark.jsp">북마크 보기</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/bookmark">북마크 보기</a>
                 <a class="nav-link" href="${pageContext.request.contextPath}/bookmark-group?action=list">북마크 그룹관리</a>
 
             </div>

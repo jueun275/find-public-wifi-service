@@ -48,7 +48,6 @@ public class BookmarkGroupServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+action);
         if ("add".equals(action)) {
             // 북마크 그룹 추가
             logger.info("Add Bookmark Group");

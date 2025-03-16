@@ -6,6 +6,7 @@
 <%@ include file="layout/nav.jsp" %>
 
 <form action="${pageContext.request.contextPath}/bookmark-group" method="POST" accept-charset="UTF-8">
+    <input type="hidden" name="action" value="add">
     <table class="table table-bordered">
         <tbody>
         <tr>

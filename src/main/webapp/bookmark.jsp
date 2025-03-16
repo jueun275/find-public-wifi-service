@@ -22,8 +22,8 @@
             <c:forEach var="bookmark" items="${bookmarkList}">
                 <tr>
                     <td>${bookmark.id}</td>
-                    <td>${bookmark.wifiName}</td>
                     <td>${bookmark.bookMarkGroupName}</td>
+                    <td>${bookmark.wifiName}</td>
                     <td>${bookmark.createDate}</td>
                     <td>
                         <form action="${pageContext.request.contextPath}/bookmark" method="POST" style="display:inline;">
