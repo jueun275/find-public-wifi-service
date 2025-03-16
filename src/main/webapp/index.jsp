@@ -71,7 +71,7 @@
             </c:when>
             <c:otherwise>
                 <tr>
-                    <td colspan="18">데이터를 저장하고 실행해주세요</td>
+                    <td colspan="18" style="text-align: center">데이터를 저장하고 실행해주세요</td>
                 </tr>
             </c:otherwise>
         </c:choose>
