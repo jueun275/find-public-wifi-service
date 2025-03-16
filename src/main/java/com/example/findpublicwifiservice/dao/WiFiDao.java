@@ -40,7 +40,7 @@ public class WiFiDao {
                 ps.setDouble(15, wifi.getLongitude());
                 ps.setString(16, wifi.getWorkDatetime());
 
-                ps.addBatch(); // 배치에 추가
+                ps.addBatch();
             }
 
             // 배치 실행

@@ -107,7 +107,7 @@ public class BookmarkGroupDao {
             ps.setString(1, name);
             ps.setInt(2, orderValue);
             ps.setString(3, currentDateTime);
-            ps.setInt(4, id);  // ID 설정
+            ps.setInt(4, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -47,10 +47,8 @@ public class HistoryDao {
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            // ID 값 설정
             ps.setInt(1, id);
 
-            // 쿼리 실행
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -60,7 +58,7 @@ public class HistoryDao {
 
     public List<HistoryDto> getHistoryInfo() {
         List<HistoryDto> historyList = new ArrayList<>();
-        String sql = "SELECT ID, LAT, LNT, CREATE_DT FROM HISTORY";  // SELECT 쿼리문
+        String sql = "SELECT ID, LAT, LNT, CREATE_DT FROM HISTORY";
 
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
