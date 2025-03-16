@@ -1,6 +1,9 @@
 package com.example.findpublicwifiservice.controller;
 
 import com.example.findpublicwifiservice.dto.WiFiDto;
+import com.example.findpublicwifiservice.service.BookmarkGroupService;
+import com.example.findpublicwifiservice.service.BookmarkService;
+import com.example.findpublicwifiservice.service.HistoryService;
 import com.example.findpublicwifiservice.service.WiFiService;
 
 import javax.servlet.RequestDispatcher;
@@ -18,11 +21,15 @@ import java.util.List;
 public class WiFiServlet extends HttpServlet {
 
     private WiFiService wifiService;
+    private HistoryService historyService;
+    private BookmarkGroupService bookmarkGroupService;
 
     @Override
     public void init() throws ServletException {
         super.init();
         wifiService = new WiFiService();
+        historyService = new HistoryService();
+        bookmarkGroupService =  new BookmarkGroupService();
     }
 
     @Override
@@ -40,6 +47,7 @@ public class WiFiServlet extends HttpServlet {
             } else if ("getWiFiDetail".equals(action)) {
                 WiFiDto wifiInfo = getWiFiInfo(request.getParameter("mgrNo"));
                 request.setAttribute("wifi", wifiInfo);
+                request.setAttribute("bookmarkGroupList", bookmarkGroupService.getAllBookMarkGroups());
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/detail.jsp");
                 dispatcher.forward(request, response);
             } else {
@@ -56,6 +64,7 @@ public class WiFiServlet extends HttpServlet {
     }
 
     private List<WiFiDto> getWiFiInfoList(String lat, String lnt) throws SQLException, ClassNotFoundException {
+        historyService.save(lat, lnt);
         return wifiService.getWiFiInfoList(lat,lnt);
     }
 

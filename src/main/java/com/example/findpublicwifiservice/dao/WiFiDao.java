@@ -84,7 +84,7 @@ public class WiFiDao {
 
             while (rs.next()) {
                 WiFiDto wifiDto = WiFiDto.fromResultSet(rs);
-                wifiDto.setDistance(rs.getDouble("DISTANCE"));
+                wifiDto.setDistance(String.format("%.4f", rs.getDouble("DISTANCE")));
                 wifiDtoList.add(wifiDto);
             }
 

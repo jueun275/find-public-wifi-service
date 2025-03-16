@@ -1,10 +1,12 @@
 package com.example.findpublicwifiservice.config;
 
 import java.sql.*;
+import java.util.logging.Logger;
 
 // spring 에서는 DB 커넥션풀로 관리하는데 서블릿에서 서정방방법을 몰라서  싱글톤으로 관리합니다.
 public class DatabaseConnection {
 
+    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
     private static final String DB_URL = "jdbc:sqlite:D:\\_A_JUEUN\\zerobase\\find-public-wifi-service\\db\\wifi_db.sqlite";
     private Connection connection;
 
@@ -28,9 +30,9 @@ public class DatabaseConnection {
                 Class.forName("org.sqlite.JDBC");
                 // 연결 설정
                 this.connection = DriverManager.getConnection(DB_URL);
-                System.out.println("DB에 연결되었습니다");
+                logger.info("DB에 연결되었습니다");
             } catch (ClassNotFoundException | SQLException e) {
-                System.err.println("DB연결에 문제가 생겼습니다. " + e.getMessage());
+                logger.severe("DB연결에 문제가 생겼습니다. " + e.getMessage());
                 throw new SQLException("Error connecting to database", e);
             }
         }
@@ -46,7 +48,7 @@ public class DatabaseConnection {
             try {
                 resource.close();
             } catch (Exception e) {
-                System.err.println("Error while closing resource: " + e.getMessage());
+                logger.severe("리소스를 닫는 중 오류가 발생했습니다: " + e.getMessage());
             }
         }
     }
@@ -57,7 +59,7 @@ public class DatabaseConnection {
         try {
             return this.connection != null && !this.connection.isClosed();
         } catch (SQLException e) {
-            System.err.println("Error checking connection status: " + e.getMessage());
+            logger.severe("연결 상태 확인 중 오류가 발생했습니다: " + e.getMessage());
             return false;
         }
     }
