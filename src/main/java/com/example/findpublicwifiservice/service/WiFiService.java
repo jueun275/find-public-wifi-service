@@ -23,4 +23,6 @@ public class WiFiService {
     public WiFiDto getWiFiDetail(String id) throws SQLException, ClassNotFoundException {
        return wifiDao.select(id);
     }
+
+
 }

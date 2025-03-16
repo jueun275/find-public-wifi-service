@@ -12,7 +12,7 @@ import java.sql.SQLException;
 @Setter
 @Getter
 public class WiFiDto {
-    private double distance = 0.0;
+    private String distance;
     private String mgrNo;
     private String district;
     private String wifiName;
