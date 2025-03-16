@@ -15,17 +15,17 @@
         <tbody>
         <tr>
             <th class="text-center">북마크 이름</th>
-            <td><input type="text" name="bookmarkName" value="${bookmarkGroup.name}" class="form-control" required/></td>
+            <td><input type="text" name="name" value="<%= bookmarkGroup.getName() %>" class="form-control" required/></td>
         </tr>
         <tr>
             <th class="text-center">순서</th>
-            <td><input type="number" name="bookmarkOrder" value="${bookmarkGroup.order}" class="form-control" required/></td>
+            <td><input type="number" name="orderValue" value="<%= bookmarkGroup.getOrderValue() %>" class="form-control" required/></td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
             <input type="hidden" name="action" value="update" />
-            <input type="hidden" name="id" value="${bookmarkGroup.id}" />
+            <input type="hidden" name="id" value="<%= bookmarkGroup.getId() %>" />
             <td colspan="2" class="text-center">
                 <a href="${pageContext.request.contextPath}/bookmark-group.jsp" class="btn btn-secondary btn-sm w-45">돌아가기</a>
                 <button type="submit" class="btn btn-primary btn-lg w-45">수정</button>

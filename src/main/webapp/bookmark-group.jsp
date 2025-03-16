@@ -38,7 +38,7 @@
                 </tr>
             </c:forEach>
         </c:if>
-        <c:if test="${empty bookmarkList}">
+        <c:if test="${empty bookmarkGroupList}">
             <tr>
                 <td colspan="6" style="text-align: center;">정보가 존재하지 않습니다.</td>
             </tr>

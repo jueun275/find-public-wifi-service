@@ -3,6 +3,7 @@ package com.example.findpublicwifiservice.controller;
 import com.example.findpublicwifiservice.dto.BookmarkDto;
 import com.example.findpublicwifiservice.service.BookmarkService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,12 +25,9 @@ public class BookMarkServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        List<BookmarkDto> bookmarkList = bookmarkService.getAllBookmarks();
-
-        request.setAttribute("bookmarkList", bookmarkList);
-
-        request.getRequestDispatcher("bookmark-list.jsp").forward(request, response);
+        request.setAttribute("bookmarkList", getBookmarkList());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/bookmark.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
@@ -44,23 +42,29 @@ public class BookMarkServlet extends HttpServlet {
         }
     }
 
-    private void addBookmark(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void addBookmark(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // 파라미터 받기
         String mgrNo = request.getParameter("mgrNo");
-        int bookmarkGroupId = Integer.parseInt(request.getParameter("id"));
-
+        int bookmarkGroupId = Integer.parseInt(request.getParameter("bookmarkGroup"));
         bookmarkService.addBookmark(mgrNo, bookmarkGroupId);
-
-        response.sendRedirect("bookmark-list.jsp?message=북마크가 추가되었습니다.");
+        request.setAttribute("bookmarkList", getBookmarkList());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/bookmark.jsp");
+        dispatcher.forward(request, response);
     }
 
-    private void deleteBookmark(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void deleteBookmark(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
         bookmarkService.deleteBookmark(id);
+        request.setAttribute("bookmarkList", getBookmarkList());
 
-        response.sendRedirect("bookmark-list.jsp?message=북마크가 삭제되었습니다.");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/bookmark.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private  List<BookmarkDto> getBookmarkList() {
+        return bookmarkService.getAllBookmarks();
     }
 
 }

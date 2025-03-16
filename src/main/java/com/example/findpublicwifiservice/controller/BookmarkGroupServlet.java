@@ -72,7 +72,7 @@ public class BookmarkGroupServlet extends HttpServlet {
             String id = request.getParameter("id");
             String name = request.getParameter("name");
             String orderValue =request.getParameter("orderValue");
-            bookmarkGroupService.updateBookMarkGroup(name, orderValue, id);
+            bookmarkGroupService.updateBookMarkGroup(id, orderValue, name);
 
             request.setAttribute("bookmarkGroupList", getList());
             request.getRequestDispatcher("bookmark-group.jsp").forward(request, response);

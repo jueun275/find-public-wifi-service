@@ -25,6 +25,7 @@ public class OpenApiService {
 
 
     public OpenApiService(ServletContext context){
+        this.wifiDao = new WiFiDao();
         this.client = new OkHttpClient();
         this.wifiDao = new WiFiDao();
         accessKey = context.getInitParameter("openapi.accessKey");
@@ -45,7 +46,7 @@ public class OpenApiService {
             }
         } catch (SQLException e) {
             e.printStackTrace(); // 예외가 발생하면 로그 출력
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -76,9 +77,33 @@ public class OpenApiService {
         }
     }
 
-    private int getTotalRecords() {
-        return 14497; // 실제 API로부터 값을 받아와야 함 구현 예정
+    private int getTotalRecords() throws IOException {
+        String url = "http://openapi.seoul.go.kr:8088/" + this.accessKey + "/json/TbPublicWifiInfo/1/1";
+
+        Request wifiRequest = new Request.Builder().url(url).build();
+
+        try {
+            Response response = client.newCall(wifiRequest).execute();
+            if (response.body() == null) {
+                System.out.println("Response body is empty");
+                return -1;
+            }
+            String responseBody = response.body().string();
+            Gson gson = new Gson();
+            JsonObject jsonResponse = gson.fromJson(responseBody, JsonObject.class);
+
+            int listTotalCount = jsonResponse.getAsJsonObject("TbPublicWifiInfo")
+                .get("list_total_count")
+                .getAsInt();
+
+            return listTotalCount;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // 예외 발생 시 오류 표시
+        }
     }
+
 
     private void insertDataToDatabase(List<WiFiModel> wifiData) throws SQLException, ClassNotFoundException {
         wifiDao.insert(wifiData);
