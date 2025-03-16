@@ -23,7 +23,7 @@
                 <tr>
                     <td>${bookmark.id}</td>
                     <td>${bookmark.bookMarkGroupName}</td>
-                    <td>${bookmark.wifiName}</td>
+                    <td><a href="${pageContext.request.contextPath}/wifi?action=getWiFiDetail&mgrNo=${bookmark.wifiMgrNo}"/>${bookmark.wifiName}</td>
                     <td>${bookmark.createDate}</td>
                     <td>
                         <form action="${pageContext.request.contextPath}/bookmark" method="POST" style="display:inline;">
