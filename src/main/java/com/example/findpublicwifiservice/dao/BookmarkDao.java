@@ -60,8 +60,8 @@ public class BookmarkDao {
             "w.X_SWIFI_MAIN_NM, bg.NAME AS BOOK_MARK_GROUP_NAME " +
             "FROM BOOK_MARK bm " +
             "JOIN WIFI_INFO w ON bm.X_SWIFI_MGR_NO = w.X_SWIFI_MGR_NO " +
-            "JOIN BOOK_MARK_GROUP bg ON bm.BOOK_MARK_GROUP_ID = bg.ID " +
-            "ORDER BY bm.ID";
+            "JOIN BOOK_MARK_GROUP bg ON bm.BOOK_MARK_GROUP_ID = bg.ID " ;
+
 
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -83,7 +83,8 @@ public class BookmarkDao {
             "w.X_SWIFI_MAIN_NM, bg.NAME AS BOOK_MARK_GROUP_NAME " +
             "FROM BOOK_MARK bm " +
             "JOIN WIFI_INFO w ON bm.X_SWIFI_MGR_NO = w.X_SWIFI_MGR_NO " +
-            "JOIN BOOK_MARK_GROUP bg ON bm.BOOK_MARK_GROUP_ID = bg.ID ";
+            "JOIN BOOK_MARK_GROUP bg ON bm.BOOK_MARK_GROUP_ID = bg.ID " +
+            "WHERE bm.ID = ?";
 
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
