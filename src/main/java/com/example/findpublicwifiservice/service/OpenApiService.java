@@ -31,9 +31,10 @@ public class OpenApiService {
         accessKey = context.getInitParameter("openapi.accessKey");
     }
 
-    public void processAllWifiData() {
+    public int processAllWifiData() {
+        int totalRecords = 0;
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            int totalRecords = getTotalRecords(); // 전체 데이터 개수 조회
+            totalRecords = getTotalRecords();
             int startNum = 1;
             int endNum = PAGE_SIZE; // 끝 번호 (한 번에 조회할 최대 개수)
 
@@ -49,6 +50,8 @@ public class OpenApiService {
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
+
+        return totalRecords;
     }
 
 
