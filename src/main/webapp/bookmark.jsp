@@ -26,11 +26,7 @@
                     <td><a href="${pageContext.request.contextPath}/wifi?action=getWiFiDetail&mgrNo=${bookmark.wifiMgrNo}"/>${bookmark.wifiName}</td>
                     <td>${bookmark.createDate}</td>
                     <td>
-                        <form action="${pageContext.request.contextPath}/bookmark" method="POST" style="display:inline;">
-                            <input type="hidden" name="action" value="delete" />
-                            <input type="hidden" name="id" value="${bookmark.id}" />
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
-                        </form>
+                        <a href="${pageContext.request.contextPath}/bookmark-delete.jsp?id=${bookmark.id}"  class="btn btn-danger btn-sm">삭제</a>
                     </td>
                 </tr>
             </c:forEach>

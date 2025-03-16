@@ -77,6 +77,31 @@ public class BookmarkDao {
         return bookmarkList;
     }
 
+    public BookmarkDto select(int id) {
+        BookmarkDto bookmarkDto = null;
+        String sql = "SELECT bm.ID, bm.X_SWIFI_MGR_NO, bm.BOOK_MARK_GROUP_ID, bm.CREATE_DT, " +
+            "w.X_SWIFI_MAIN_NM, bg.NAME AS BOOK_MARK_GROUP_NAME " +
+            "FROM BOOK_MARK bm " +
+            "JOIN WIFI_INFO w ON bm.X_SWIFI_MGR_NO = w.X_SWIFI_MGR_NO " +
+            "JOIN BOOK_MARK_GROUP bg ON bm.BOOK_MARK_GROUP_ID = bg.ID " +
+            "WHERE bm.ID = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    bookmarkDto = BookmarkDto.fromResultSet(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return bookmarkDto;
+    }
+
     private String getCurrentDateTime() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

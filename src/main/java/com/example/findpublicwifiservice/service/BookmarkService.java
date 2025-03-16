@@ -26,4 +26,8 @@ public class BookmarkService {
     public void deleteBookmark(int id) {
         bookmarkDao.delete(id);
     }
+
+    public BookmarkDto selectBookmark(int id) {
+       return bookmarkDao.select(id);
+    }
 }
